@@ -4,7 +4,7 @@ import { Link } from 'expo-router'
 
 export default function App() {
   return (
-    <View style={styles.container}>
+    <View className='flex-1 justify-center items-center bg-blue-600'>
       <Text>Aurora!!!</Text>
       <StatusBar style="auto" />
       <Link href="/profile" style={{ color: "blue"}}>
@@ -14,11 +14,11 @@ export default function App() {
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+// const styles = StyleSheet.create({
+//   container: {
+//     flex: 1,
+//     backgroundColor: '#fff',
+//     alignItems: 'center',
+//     justifyContent: 'center',
+//   },
+// });
