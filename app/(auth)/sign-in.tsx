@@ -4,6 +4,7 @@ import { SafeAreaView } from 'react-native-safe-area-context'
 import { Image } from 'react-native'
 
 import { images } from '../../constants'
+import FormField from '../../components/FormField'
 
 const SignIn = () => {
   return (
@@ -15,7 +16,9 @@ const SignIn = () => {
           className='w-[134px] h-[84px]'
           resizeMode='contain'
           />
-          <Text className=' text-3xl font-psemibold text-gray-100'>Sign in</Text>
+          <Text className=' text-3xl font-psemibold text-gray-100'>Sign in to Aora </Text>
+
+        <FormField/>
         </View>
       </ScrollView>
     </SafeAreaView>
