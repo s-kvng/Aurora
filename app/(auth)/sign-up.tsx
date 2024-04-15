@@ -1,4 +1,4 @@
-import { Text, View, ScrollView, TouchableOpacity, Platform, KeyboardAvoidingView, StatusBar as status } from 'react-native'
+import { Text, View, ScrollView, TouchableOpacity, Platform, KeyboardAvoidingView, StatusBar as status, Alert } from 'react-native'
 import React, { useState } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { Image } from 'react-native'
@@ -6,9 +6,13 @@ import { Image } from 'react-native'
 import { images } from '../../constants'
 import FormField from '../../components/FormField'
 import CustomButton from '../../components/CustomButton'
-import { Link } from 'expo-router'
+import { Link, router } from 'expo-router'
 import { StatusBar } from 'expo-status-bar'
 import { createUser } from '../../lib/appwrite'
+
+interface MyError extends Error {
+  customField: string;
+}
 
 const SignUp = () => {
 
@@ -20,8 +24,28 @@ const SignUp = () => {
   const [ isSubmitting , setIsSubmitting ] = useState<boolean>(false)
 
   // 
-  const onSubmit = () => {
-    createUser()
+  const onSubmit = async () => {
+    if(!form.email || !form.username || !form.password){
+      Alert.alert("Error","Please fill in all required fields")
+    }
+    setIsSubmitting(true)
+    try {
+      const result = await createUser(form.email, form.password, form.username)
+
+      // set to global state
+
+      router.replace("/home")
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        const myError = error as MyError; // Narrowing down the type
+        console.log(myError.customField); // Accessing custom fields
+        Alert.alert("Error", error.message);
+      } else {
+        Alert.alert("Unknown Error", String(error));
+      }
+    }finally {
+      setIsSubmitting(false)
+    }
   }
 
   return (
@@ -94,6 +118,7 @@ const SignUp = () => {
                         <Link href={"/sign-in"} className=' text-lg text-secondary-200 font-psemibold'>Sign in</Link>
               </View>
           </View>
+          
           </KeyboardAvoidingView>
         </ScrollView>
       
