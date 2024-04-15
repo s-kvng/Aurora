@@ -1,4 +1,4 @@
-import { Text, View, ScrollView, TouchableOpacity, Platform, KeyboardAvoidingView, StatusBar as status } from 'react-native'
+import { Text, View, ScrollView, TouchableOpacity, Platform, KeyboardAvoidingView, StatusBar as status , Alert} from 'react-native'
 import React, { useState } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { Image } from 'react-native'
@@ -6,8 +6,9 @@ import { Image } from 'react-native'
 import { images } from '../../constants'
 import FormField from '../../components/FormField'
 import CustomButton from '../../components/CustomButton'
-import { Link } from 'expo-router'
+import { Link, router } from 'expo-router'
 import { StatusBar } from 'expo-status-bar'
+import { signIn } from '../../lib/appwrite'
 
 const SignIn = () => {
 
@@ -18,7 +19,27 @@ const SignIn = () => {
   const [ isSubmitting , setIsSubmitting ] = useState<boolean>(false)
 
   // 
-  const onSubmit = () => {}
+  const onSubmit = async () => {
+
+    if(!form.email || !form.password){
+     return Alert.alert("Error","Please fill in all required fields")
+    }
+    setIsSubmitting(true)
+    try {
+      
+      await signIn(form.email, form.password)
+
+      // set to global state
+
+      router.replace("/home")
+    } catch (error: unknown) {
+      console.log(error)
+    }finally {
+      setIsSubmitting(false)
+    }
+
+
+  }
 
   return (
     <SafeAreaView className={` bg-primary h-full pt-[${status.currentHeight}] `}>
