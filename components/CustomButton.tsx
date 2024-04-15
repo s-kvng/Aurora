@@ -5,7 +5,7 @@ import React from 'react'
 interface ButtonProps{
     title : string;
     handlePress : () => void;
-    isLoading : boolean;
+    isLoading? : boolean;
     containerStyles?: string;
     textStyles?: string;
 }
