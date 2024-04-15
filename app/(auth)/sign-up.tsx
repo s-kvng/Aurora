@@ -8,6 +8,7 @@ import FormField from '../../components/FormField'
 import CustomButton from '../../components/CustomButton'
 import { Link } from 'expo-router'
 import { StatusBar } from 'expo-status-bar'
+import { createUser } from '../../lib/appwrite'
 
 const SignUp = () => {
 
@@ -19,7 +20,9 @@ const SignUp = () => {
   const [ isSubmitting , setIsSubmitting ] = useState<boolean>(false)
 
   // 
-  const onSubmit = () => {}
+  const onSubmit = () => {
+    createUser()
+  }
 
   return (
     <SafeAreaView className={` bg-primary h-full pt-[${status.currentHeight}] `}>
@@ -78,7 +81,7 @@ const SignUp = () => {
 
             
 
-            <CustomButton title='Log in' 
+            <CustomButton title='Sign Up' 
             handlePress={onSubmit} 
             isLoading={isSubmitting} 
             containerStyles='mt-7'  
