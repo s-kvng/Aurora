@@ -37,7 +37,7 @@ const FormField : React.FC<FormProps> = ({ title, value , handleChangeText , oth
 
         { title === "Password" && 
           <TouchableOpacity onPress={()=> setShowPassword(!showPassword)}>
-            <Image source={!showPassword ? icons.eye : icons.eyeHide} className=' w-6 h-6'/>
+            <Image source={!showPassword ? icons.eye : icons.eyeHide} className=' w-6 h-6' resizeMode='contain'/>
 
           </TouchableOpacity>
         }
