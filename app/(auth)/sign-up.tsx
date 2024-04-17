@@ -9,12 +9,15 @@ import CustomButton from '../../components/CustomButton'
 import { Link, router } from 'expo-router'
 import { StatusBar } from 'expo-status-bar'
 import { createUser } from '../../lib/appwrite'
+import { useGlobalContext } from '../../context/GlobalProvider'
 
 interface MyError extends Error {
   customField: string;
 }
 
 const SignUp = () => {
+
+  const { setUser , setIsLoggedIn } = useGlobalContext() 
 
   const [ form , setForm] = useState({
     email : "",
@@ -33,6 +36,9 @@ const SignUp = () => {
       const result = await createUser(form.email, form.password, form.username)
 
       // set to global state
+      setUser(result)
+      setIsLoggedIn(true) 
+      
 
       router.replace("/home")
     } catch (error: unknown) {
