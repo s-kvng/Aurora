@@ -1,33 +1,72 @@
-import { View, Text, FlatList, Image } from 'react-native'
-import React, { useState } from 'react'
+import { View, Text, FlatList, Image, Alert } from 'react-native'
+import React, { useEffect, useState } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
 import { images } from '../../constants'
 import SearchInput from '../../components/SearchInput'
 import Trending from '../../components/Trending'
 import EmptyState from '../../components/EmptyState'
+import { getAllPosts } from '../../lib/appwrite'
+import useAppwrite from '../../lib/useAppwrite'
+
+
+interface AppwriteVideo {
+  // System-generated fields
+  "$collectionId": string;
+  "$createdAt": string;
+  "$databaseId": string;
+  "$id": string;
+  "$permissions": string[]; // Assuming it's an array of strings
+  "$updatedAt": string;
+
+  // Video-specific fields
+  creator: Creator;
+  prompt: string;
+  thumbnail: string;
+  title: string;
+  video: string;
+}
+
+interface Creator {
+  "$collectionId": string;
+  "$createdAt": string;
+  "$databaseId": string;
+  "$id": string;
+  "$permissions": string[]; // Assuming it's an array of strings
+  "$updatedAt": string;
+
+  accountId?: string; // Optional field
+  avatar: string;
+  email: string;
+  username: string;
+}
+
 
 const Home = () => {
+  const { data: posts, refresh, isLoading } = useAppwrite(getAllPosts)
+  
 
   const [refreshing , setRefreshing] = useState(false)
 
-  const onRefresh = () =>{
+  const onRefresh = async () =>{
     setRefreshing(true)
         // setTimeout(() => {
         //   setRefreshing(false)
         // }, 2000)
       // re-call vidoes -> if any new vidoes appeared
+      await refresh()
       setRefreshing(false)
   }
 
+  console.log("posts -> ", posts,"\n")
   return (
     <SafeAreaView className=' bg-primary h-full'>
       <FlatList
-      data={[{ id : 1}, { id : 2}, { id : 3}]}
-      keyExtractor={(item, index)=> String(item?.id) || index.toString()}
+      data={posts}
+      keyExtractor={(item)=> item.$id}
       renderItem={({item})=>(
         <View>
-          <Text className=' text-3xl '>{item.id}</Text>
+          <Text className=' text-3xl '>{item.title}</Text>
         </View>
       )}
       ListHeaderComponent={()=>(
