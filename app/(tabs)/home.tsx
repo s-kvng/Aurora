@@ -8,6 +8,7 @@ import Trending from '../../components/Trending'
 import EmptyState from '../../components/EmptyState'
 import { getAllPosts } from '../../lib/appwrite'
 import useAppwrite from '../../lib/useAppwrite'
+import VideoCard from '../../components/VideoCard'
 
 
 interface AppwriteVideo {
@@ -66,7 +67,7 @@ const Home = () => {
       keyExtractor={(item)=> item.$id}
       renderItem={({item})=>(
         <View>
-          <Text className=' text-3xl '>{item.title}</Text>
+        <VideoCard post={item}/>
         </View>
       )}
       ListHeaderComponent={()=>(
