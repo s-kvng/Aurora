@@ -1,10 +1,11 @@
 import { View, Text, FlatList, TouchableOpacity, Image, ImageBackground, TextStyle, ViewStyle, ImageStyle } from 'react-native'
 import * as Animatable from "react-native-animatable"
 import { ViewToken } from 'react-native';
-import React, { useState } from 'react'
+import React, { useRef, useState } from 'react'
 
 import { AppwriteVideo } from '../lib/types';
 import { icons } from '../constants';
+import { Video, ResizeMode } from 'expo-av';
 
 interface TrendingProps{
     posts : AppwriteVideo[];
@@ -24,7 +25,7 @@ const zoomIn= {
     scale: 0.9,
   },
   1: {
-    scale: 1
+    scale: 1.1
   }
 }
 
@@ -38,7 +39,9 @@ const zoomOut = {
 }
 
 const TrendingItem = ({ activeItem , item}: TrendingItemProps) =>{
+  const vid = useRef(null)
   const [ play , setPlay] = useState(false)
+  const [status, setStatus] = useState({});
 
   return (
     <Animatable.View className='mr-5' 
@@ -49,7 +52,24 @@ const TrendingItem = ({ activeItem , item}: TrendingItemProps) =>{
       {
             play ?
             (
-               <Text className=' text-white'>Playing..</Text> 
+               <>
+               <Video
+               ref={vid}
+               source={{ uri :  "https://d23dyxeqlo5psv.cloudfront.net/big_buck_bunny.mp4"}}
+               className=' w-52 h-72 rounded-[35px] mt-3 bg-white self-center'
+               resizeMode={ResizeMode.CONTAIN}
+               useNativeControls
+               shouldPlay
+               
+               onPlaybackStatusUpdate={(status)=>{
+                if(status.didJustFinish){
+                  setPlay(false)
+                }
+               }}
+               />
+               
+               </>
+
             )
             :
             (
@@ -106,3 +126,5 @@ const Trending : React.FC<TrendingProps> = ({posts}) => {
 }
 
 export default Trending
+
+// https://d23dyxeqlo5psv.cloudfront.net/big_buck_bunny.mp4

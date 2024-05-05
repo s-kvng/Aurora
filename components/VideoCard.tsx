@@ -1,15 +1,16 @@
 import { View, Text, Image, TouchableOpacity } from 'react-native'
-import React, { useState} from 'react'
+import React, { useState, useRef} from 'react'
 
 import { AppwriteVideo } from '../lib/types'
 import { icons } from '../constants';
+import { Video, ResizeMode } from 'expo-av';
 
 interface VideoCardProps {
     post : AppwriteVideo;
 }
 
 const VideoCard: React.FC<VideoCardProps> = ({ post : { title, thumbnail, video , creator: { username , avatar}} }) => {
-
+    const vid = useRef(null)
     const [play , setPlay] = useState(false)
 
   return (
@@ -40,7 +41,23 @@ const VideoCard: React.FC<VideoCardProps> = ({ post : { title, thumbnail, video 
         {
             play ?
             (
-               <Text className=' text-white'>Playing..</Text> 
+                <>
+                <Video
+                ref={vid}
+                source={{ uri :  "https://d23dyxeqlo5psv.cloudfront.net/big_buck_bunny.mp4"}}
+                className=' w-full h-60 rounded-xl mt-3'
+                resizeMode={ResizeMode.CONTAIN}
+                useNativeControls
+                shouldPlay
+                
+                onPlaybackStatusUpdate={(status)=>{
+                 if(status.didJustFinish){
+                   setPlay(false)
+                 }
+                }}
+                />
+                
+                </>
             )
             :
             (
@@ -49,7 +66,7 @@ const VideoCard: React.FC<VideoCardProps> = ({ post : { title, thumbnail, video 
                 activeOpacity={0.7}
                 onPress={()=> setPlay(true)}
                 >
-                    <Image source={{ uri: thumbnail }}
+                    <Image source={{ uri: "https://picsum.photos/300" }}
                     className=' w-full h-full rounded-xl mt-3'
                     resizeMode='cover'
                     />
