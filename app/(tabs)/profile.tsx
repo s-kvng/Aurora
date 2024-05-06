@@ -64,7 +64,7 @@ const Profile = () => {
         </View>
       )}
       ListHeaderComponent={()=>(
-       <View className=' w-full justify-center items-center mt-4 mb-12 px-4 bg-red-300'>
+       <View className=' w-full justify-center items-center mt-4 mb-12 px-4 '>
         <TouchableOpacity className=' mb-10 w-full items-end m' onPress={logout}>
           <Image source={icons.logout} className=' w-7 h-7' resizeMode='contain'/>
         </TouchableOpacity>
@@ -78,7 +78,7 @@ const Profile = () => {
           titleStyles={" text-lg"}
         />
 
-        <View className='flex-row bg-blue-400'>
+        <View className='flex-row '>
         <InfoBox
           title={posts?.length || 0}
           subtitle={"Posts"}
