@@ -24,7 +24,7 @@ const GlobalProvider = ({ children }) => {
         }
       })
       .catch((err) => {
-        console.log(err);
+        console.log("global state error -> ", err);
       })
       .finally(() => {
         setIsLoading(false);
