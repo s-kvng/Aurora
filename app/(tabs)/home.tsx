@@ -44,7 +44,7 @@ interface Creator {
 
 
 const Home = () => {
-  const { data: posts, refresh, isLoading } = useAppwrite(getAllPosts)
+  const { data: posts, refetch, isLoading } = useAppwrite(getAllPosts)
   const { data: latestPosts } = useAppwrite(getLatestPosts)
   
 
@@ -56,7 +56,7 @@ const Home = () => {
         //   setRefreshing(false)
         // }, 2000)
       // re-call vidoes -> if any new vidoes appeared
-      await refresh()
+      await refetch()
       setRefreshing(false)
   }
 

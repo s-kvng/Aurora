@@ -53,9 +53,9 @@ const useAppwrite = (fn : () => Promise<AppwriteVideo[]>) => {
     fetchData();
   }, []);
 
-  const refresh = () => fetchData();
+  const refetch = () => fetchData();
 
-  return { data, refresh, isLoading };
+  return { data, refetch, isLoading };
 };
 
 export default useAppwrite;

@@ -1,21 +1,17 @@
-import { View, Text, TextInput, KeyboardTypeOptions, TouchableOpacity, Image } from 'react-native'
+import { View, TextInput, TouchableOpacity, Image, Alert } from 'react-native'
 import React, { useState } from 'react'
+import { router, usePathname } from 'expo-router';
 
 import { icons } from '../constants';
 
 
-interface FormProps {
-  title? : string;
-  value? : string;
-  handleChangeText? : (value : string) => void;
-  otherStyles? : string;
-  keyBoardType? : KeyboardTypeOptions;
-  placeholder? : string;
+interface SearchProps {
+  initialQuery?: string;
 }
 
-const SearchInput : React.FC<FormProps> = ({ title, value , handleChangeText , otherStyles, keyBoardType, placeholder}) => {
-
-  const [ showPassword, setShowPassword ] = useState<boolean>(false)
+const SearchInput : React.FC<SearchProps> = ({ initialQuery}) => {
+  const pathname = usePathname()
+  const [ query , setQuery ] = useState<string>(initialQuery || "")
 
   return (
 
@@ -25,16 +21,26 @@ const SearchInput : React.FC<FormProps> = ({ title, value , handleChangeText , o
       focus:border-secondary items-center flex-row space-x-4'>
 
         <TextInput
-        className=' flex-1 text-white font-pregular text-base  py-1'
-        placeholder={"Search for a video topic"} 
-        placeholderTextColor={"#7b7b8b"}
-        value={value}
-        onChangeText={handleChangeText}
-        keyboardType={keyBoardType}
-        secureTextEntry={title === "Password" && !showPassword}
-        />
+          className=' flex-1 text-white font-pregular text-base  py-1'
+          placeholder={"Search for a video topic"} 
+          placeholderTextColor={"#cdcde0"}
+          value={query}
+        onChangeText={(e)=> setQuery(e)}
+      />
 
-          <TouchableOpacity onPress={()=>console.log("Search")}>
+          <TouchableOpacity onPress={()=>
+            {
+              if (!query) {
+                return Alert.alert("Missing query", "Please input something to search results across database")
+              }
+
+              if (pathname.startsWith("/search")) {
+                router.setParams({ query })
+              } else {
+                router.push(`/search/${query}`)
+              }
+            }
+          }>
             <Image source={icons.search} className=' w-5 h-5' resizeMode='contain'/>
 
           </TouchableOpacity>
