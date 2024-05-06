@@ -9,6 +9,7 @@ import EmptyState from '../../components/EmptyState'
 import { getAllPosts, getLatestPosts } from '../../lib/appwrite'
 import useAppwrite from '../../lib/useAppwrite'
 import VideoCard from '../../components/VideoCard'
+import { useGlobalContext } from '../../context/GlobalProvider'
 
 
 interface AppwriteVideo {
@@ -44,6 +45,7 @@ interface Creator {
 
 
 const Home = () => {
+  const { user} = useGlobalContext();
   const { data: posts, refetch, isLoading } = useAppwrite(getAllPosts)
   const { data: latestPosts } = useAppwrite(getLatestPosts)
   
@@ -75,8 +77,8 @@ const Home = () => {
         <View className='my-5 px-4 space-y-6'>
           <View className=' flex-row justify-between items-center mb-5'>
             <View className=' '>
-              <Text className=' text-2xl text-gray-400'>Welcome Back</Text>
-              <Text className=' text-3xl text-white font-psemibold'>Kvng</Text>
+              <Text className=' text-2xl text-gray-400'>Welcome Back,</Text>
+              <Text className=' text-3xl text-white font-psemibold'>{user?.username}</Text>
             </View>
             <Image source={images.logoSmall} className=' w-8 h-9' resizeMode='contain'/>
           </View>
