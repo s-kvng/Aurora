@@ -9,6 +9,8 @@ import * as DocumentPicker from "expo-document-picker"
 import { icons } from '../../constants'
 import CustomButton from '../../components/CustomButton'
 import { router } from 'expo-router'
+import { createVideo } from '../../lib/appwrite'
+import { useGlobalContext } from '../../context/GlobalProvider'
 
 
 interface formTypes {
@@ -19,6 +21,7 @@ interface formTypes {
 }
 
 const Create = () => {
+  const { user } = useGlobalContext()
   const [ uploading , setUploading ] = useState<boolean>(false)
   const [ form , setForm ] = useState<formTypes>({
     title: "",
@@ -64,6 +67,7 @@ const Create = () => {
     setUploading(true)
 
     try {
+      await createVideo({...form , userId : user.$id})
       
       Alert.alert("Success", "Post Uploaded successfully")
       router.push("/home")
@@ -156,10 +160,10 @@ const Create = () => {
 
           <CustomButton 
           title='Submit'
-          handlePress={()=>{}}
+          handlePress={()=>{handleSubmit()}}
           containerStyles=' mt-10'
           textStyles=' text-white font-psemibold'
-          isLoading={false}
+          isLoading={uploading}
           />
       </ScrollView>
     </SafeAreaView>
