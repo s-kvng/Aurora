@@ -41,8 +41,8 @@ const SignIn = () => {
       Alert.alert("Success", "User signed in successfully")
       router.replace("/home")
 
-    } catch (error: unknown) {
-      console.log("log in error -> ",error)
+    } catch (error: any) {
+      throw new Error(error.message)
     }finally {
       setIsSubmitting(false)
     }

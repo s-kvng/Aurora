@@ -100,7 +100,7 @@ const Trending : React.FC<TrendingProps> = ({posts}) => {
   const [ activeItem , setActiveItem] = useState<string | AppwriteVideo>(posts[0])
 
   const viewableItemsChanged = ({ viewableItems }: FlatListItem) => {
-    console.log("view -> ", viewableItems)
+    
     if( viewableItems.length > 0 ) {
       setActiveItem(viewableItems[0].key)
     }
