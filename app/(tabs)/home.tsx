@@ -1,4 +1,4 @@
-import { View, Text, FlatList, Image, Alert } from 'react-native'
+import { View, Text, FlatList, Image, Alert , RefreshControl} from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
@@ -62,7 +62,6 @@ const Home = () => {
       setRefreshing(false)
   }
 
-  console.log("posts -> ", posts,"\n")
   return (
     <SafeAreaView className=' bg-primary h-full'>
       <FlatList
@@ -100,7 +99,7 @@ const Home = () => {
         subtitle = "Be the first to upload a video"
         />
       )}
-      // refreshControl={<RefreshControl onRefresh={onRefresh}/>}
+      refreshControl={ <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
       />
     </SafeAreaView>
   )

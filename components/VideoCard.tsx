@@ -44,7 +44,7 @@ const VideoCard: React.FC<VideoCardProps> = ({ post : { title, thumbnail, video 
                 <>
                 <Video
                 ref={vid}
-                source={{ uri :  "https://d23dyxeqlo5psv.cloudfront.net/big_buck_bunny.mp4"}}
+                source={{ uri :  video}}
                 className=' w-full h-60 rounded-xl mt-3'
                 resizeMode={ResizeMode.CONTAIN}
                 useNativeControls
@@ -66,7 +66,7 @@ const VideoCard: React.FC<VideoCardProps> = ({ post : { title, thumbnail, video 
                 activeOpacity={0.7}
                 onPress={()=> setPlay(true)}
                 >
-                    <Image source={{ uri: "https://picsum.photos/300" }}
+                    <Image source={{ uri: thumbnail}}
                     className=' w-full h-full rounded-xl mt-3'
                     resizeMode='cover'
                     />
