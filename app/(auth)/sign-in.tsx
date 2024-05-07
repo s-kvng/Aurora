@@ -26,14 +26,14 @@ const SignIn = () => {
   const onSubmit = async () => {
 
     if(!form.email || !form.password){
-     return Alert.alert("Error","Please fill in all required fields")
+     return Alert.alert("Error","Please fill in all required fields !!!")
     }
     setIsSubmitting(true)
     try {
       
       await signIn(form.email, form.password)
       const result = await getCurrentUser()
-
+      
       // set to global state
       setUser(result)
       setIsLoggedIn(true) 
@@ -41,8 +41,8 @@ const SignIn = () => {
       Alert.alert("Success", "User signed in successfully")
       router.replace("/home")
 
-    } catch (error: unknown) {
-      console.log(error)
+    } catch (error: any) {
+      throw new Error(error.message)
     }finally {
       setIsSubmitting(false)
     }

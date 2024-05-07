@@ -11,20 +11,18 @@ const GlobalProvider = ({ children }) => {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    console.log("log in user");
     getCurrentUser()
       .then((res) => {
         if (res) {
           setIsLoggedIn(true);
           setUser(res);
-          console.log("this is user -> ", user, " ", res);
         } else {
           setIsLoggedIn(false);
           setUser(null);
         }
       })
       .catch((err) => {
-        console.log(err);
+        throw new Error(err.message);
       })
       .finally(() => {
         setIsLoading(false);

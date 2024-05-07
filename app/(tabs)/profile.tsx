@@ -1,12 +1,12 @@
 import { View, Text, FlatList, TouchableOpacity, Image} from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
-import { useLocalSearchParams } from 'expo-router'
+import { router, useLocalSearchParams } from 'expo-router'
 
 
 import SearchInput from '../../components/SearchInput'
 import EmptyState from '../../components/EmptyState'
-import {  getUserPosts, searchPosts } from '../../lib/appwrite'
+import {  getUserPosts, searchPosts, signOut } from '../../lib/appwrite'
 import useAppwrite from '../../lib/useAppwrite'
 import VideoCard from '../../components/VideoCard'
 import { useGlobalContext } from '../../context/GlobalProvider'
@@ -47,11 +47,16 @@ interface Creator {
 
 const Profile = () => {
   const { user, setUser,  setIsLoggedIn} = useGlobalContext();
-  console.log("User -> ",user.$id)
   const { data: posts, refetch, isLoading } = useAppwrite( ()=> getUserPosts(user.$id))
   
 
-  const logout = () =>{}
+  const logout = async () =>{
+    await signOut();
+    setUser(null);
+    setIsLoggedIn(false);
+
+    router.replace("/sign-in")
+  }
 
   return (
     <SafeAreaView className=' bg-primary h-full'>
@@ -64,7 +69,7 @@ const Profile = () => {
         </View>
       )}
       ListHeaderComponent={()=>(
-       <View className=' w-full justify-center items-center mt-4 mb-12 px-4 bg-red-300'>
+       <View className=' w-full justify-center items-center mt-4 mb-12 px-4 '>
         <TouchableOpacity className=' mb-10 w-full items-end m' onPress={logout}>
           <Image source={icons.logout} className=' w-7 h-7' resizeMode='contain'/>
         </TouchableOpacity>
@@ -78,7 +83,7 @@ const Profile = () => {
           titleStyles={" text-lg"}
         />
 
-        <View className='flex-row bg-blue-400'>
+        <View className='flex-row '>
         <InfoBox
           title={posts?.length || 0}
           subtitle={"Posts"}

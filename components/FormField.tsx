@@ -5,7 +5,7 @@ import { icons } from '../constants';
 
 
 interface FormProps {
-  title : string;
+  title? : string;
   value : string;
   handleChangeText : (value : string) => void;
   otherStyles? : string;
