@@ -4,7 +4,8 @@ import { SafeAreaView } from 'react-native-safe-area-context'
 import FormField from '../../components/FormField'
 import { Video, ResizeMode } from 'expo-av'
 import { Image } from 'react-native'
-import * as DocumentPicker from "expo-document-picker"
+// import * as DocumentPicker from "expo-document-picker"
+import * as ImagePicker from "expo-image-picker";
 
 import { icons } from '../../constants'
 import CustomButton from '../../components/CustomButton'
@@ -15,8 +16,8 @@ import { useGlobalContext } from '../../context/GlobalProvider'
 
 interface formTypes {
   title : string;
-  video : DocumentPicker.DocumentPickerAsset | null ;
-  thumbnail : DocumentPicker.DocumentPickerAsset | null;
+  video : ImagePicker.ImagePickerAsset | null ;
+  thumbnail : ImagePicker.ImagePickerAsset | null;
   prompt : string;
 }
 
@@ -31,10 +32,19 @@ const Create = () => {
   })
 
   const openPicker = async (selectType: string) =>{
-    const result = await DocumentPicker.getDocumentAsync({
-      type: selectType === "image" ? 
-      ["image/png", "image/jpeg", "image/jpg"]: ["video/mp4", "video/gif"]
-    })
+    /*Pick image from file */
+    // const result = await DocumentPicker.getDocumentAsync({
+    //   type: selectType === "image" ? 
+    //   ["image/png", "image/jpeg", "image/jpg"]: ["video/mp4", "video/gif"]
+    // })
+
+    /*Pick image or video from gallery */
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: selectType === "image" ? ImagePicker.MediaTypeOptions.Images : 
+       ImagePicker.MediaTypeOptions.Videos,
+      aspect: [4, 3],
+      quality: 1,
+    });
 
     if(!result.canceled){
       if(selectType === "image"){
