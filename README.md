@@ -31,6 +31,8 @@
   - [👥 Authors ](#-authors-)
   - [🤝 Contributing ](#-contributing-)
   - [⭐️ Show your support ](#️-show-your-support-)
+  - [Acknowledgments](#acknowledgments)
+  - [📝 License](#-license)
 
 
 
@@ -175,9 +177,16 @@ Feel free to check the [issues page](../../issues/).
 
 ## ⭐️ Show your support <a name="support"></a>
 
-> Write a message to encourage readers to support your project
+> If you like this project...give us a ⭐️.
 
-If you like this project...give us a ⭐️.
+## Acknowledgments
+
+- [JavaScript Mastery](https://www.youtube.com/@javascriptmastery)
+
+
+## 📝 License
+
+This project is [MIT](./LICENSE) licensed.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
